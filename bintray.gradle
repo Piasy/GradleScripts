@@ -21,14 +21,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
 import java.text.SimpleDateFormat
 
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: "com.jfrog.bintray"
 
-def siteUrl = "https://github.com/Piasy/${rootProject.ext.artifactName}"
-def gitUrl = "https://github.com/Piasy/${rootProject.ext.artifactName}.git"
+def siteUrl = "https://github.com/${rootProject.ext.userName}/${rootProject.ext.artifactName}"
+def gitUrl = "https://github.com/${rootProject.ext.userName}/${rootProject.ext.artifactName}.git"
+def developerInfo = rootProject.ext.developer
+def licenseInfo = rootProject.ext.license
 
 group = rootProject.ext.groupName
 version = rootProject.ext.releaseVersionName
@@ -43,18 +44,9 @@ install {
                 name rootProject.ext.artifactName
                 url siteUrl
                 // Set your license
-                licenses {
-                    license {
-                        name 'The MIT License (MIT)'
-                        url 'http://opensource.org/licenses/MIT'
-                    }
-                }
+                licenses licenseInfo
                 developers {
-                    developer {
-                        id 'piasy'
-                        name 'piasy'
-                        email 'xz4215@gmail.com'
-                    }
+                    developer developerInfo
                 }
                 scm {
                     connection gitUrl
@@ -115,7 +107,7 @@ bintray {
         websiteUrl = siteUrl
         issueTrackerUrl = siteUrl + '/issues'
         vcsUrl = gitUrl
-        licenses = ['MIT']
+        licenses = [licenseInfo.name]
         labels = rootProject.ext.artifactLabels
         publicDownloadNumbers = true
         //Optional version descriptor
