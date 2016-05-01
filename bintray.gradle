@@ -44,9 +44,18 @@ install {
                 name rootProject.ext.artifactName
                 url siteUrl
                 // Set your license
-                licenses licenseInfo
+                licenses {
+                    license {
+                        name licenseInfo.name
+                        url licenseInfo.url
+                    }
+                }
                 developers {
-                    developer developerInfo
+                    developer {
+                        id developerInfo.id
+                        name developerInfo.name
+                        email developerInfo.email
+                    }
                 }
                 scm {
                     connection gitUrl
@@ -107,13 +116,13 @@ bintray {
         websiteUrl = siteUrl
         issueTrackerUrl = siteUrl + '/issues'
         vcsUrl = gitUrl
-        licenses = [licenseInfo.name]
+        licenses = [licenseInfo.id]
         labels = rootProject.ext.artifactLabels
         publicDownloadNumbers = true
         //Optional version descriptor
         version {
             name = rootProject.ext.releaseVersionName //Bintray logical version name
-            released  = new SimpleDateFormat('yyyy-MM-dd\'T\'HH:mm:ss.SSSZZ').format(new Date())
+            released = new SimpleDateFormat('yyyy-MM-dd\'T\'HH:mm:ss.SSSZZ').format(new Date())
             //2 possible values: date in the format of 'yyyy-MM-dd'T'HH:mm:ss.SSSZZ' OR a java.util.Date instance
             vcsTag = rootProject.ext.releaseVersionName
         }
