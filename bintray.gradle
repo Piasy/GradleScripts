@@ -24,24 +24,11 @@
 
 import java.text.SimpleDateFormat
 
-buildscript {
-    repositories {
-        jcenter()
-    }
-
-    dependencies {
-        classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:1.3.1"
-        classpath 'com.github.dcendents:android-maven-plugin:1.2'
-    }
-}
-
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: "com.jfrog.bintray"
 
-def siteUrl = "https://github.com/${rootProject.ext.userName}/${rootProject.ext.artifactName}"
-def gitUrl = "https://github.com/${rootProject.ext.userName}/${rootProject.ext.artifactName}.git"
-def developerInfo = rootProject.ext.developer
-def licenseInfo = rootProject.ext.license
+def siteUrl = "https://github.com/Piasy/${rootProject.ext.artifactName}"
+def gitUrl = "https://github.com/Piasy/${rootProject.ext.artifactName}.git"
 
 group = rootProject.ext.groupName
 version = rootProject.ext.releaseVersionName
@@ -56,9 +43,18 @@ install {
                 name rootProject.ext.artifactName
                 url siteUrl
                 // Set your license
-                licenses licenseInfo
+                licenses {
+                    license {
+                        name 'The MIT License (MIT)'
+                        url 'http://opensource.org/licenses/MIT'
+                    }
+                }
                 developers {
-                    developer developerInfo
+                    developer {
+                        id 'piasy'
+                        name 'piasy'
+                        email 'xz4215@gmail.com'
+                    }
                 }
                 scm {
                     connection gitUrl
@@ -119,7 +115,7 @@ bintray {
         websiteUrl = siteUrl
         issueTrackerUrl = siteUrl + '/issues'
         vcsUrl = gitUrl
-        licenses = [licenseInfo.name]
+        licenses = ['MIT']
         labels = rootProject.ext.artifactLabels
         publicDownloadNumbers = true
         //Optional version descriptor
