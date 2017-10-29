@@ -1,37 +1,50 @@
 #!/bin/bash
 
-function string_replace {
-    echo "${1//$2/$3}"
-}
+PRJ_NAME=$1
+PWD=$2
 
-PRJ=$1
-PKG=$2
-PWD=$3
-
-PKG_PATH=$(string_replace "$PKG" "\." "/")
+PRJ_PKG_NAME=`echo "$PRJ_NAME" | perl -pe 's/([a-z0-9])([A-Z])/$1_\L$2/g' | perl -ne 'print lc'`
+PKG="com.github.piasy.$PRJ_PKG_NAME"
+PKG_PATH=`echo "$PKG" | sed -e 's/\./\//g'`
 
 cd $PWD
 
 tar xvf ~/tools/piasy_android_simple_lib.tar
 
-mv GitHubAndroidOAuth $PRJ
+mv PRJ_NAME $PRJ_NAME
 
-cd $PRJ
+cd $PRJ_NAME
 
-mv GitHubAndroidOAuth $PRJ
+mv PRJ_NAME $PRJ_NAME
 
-echo "include ':$PRJ'" > settings.gradle
+echo "# $PRJ_NAME" > README.md
 
-echo "##$PRJ" > README.md
+mkdir -p $PRJ_NAME/src/main/java/$PKG_PATH/
+mkdir -p $PRJ_NAME/src/debug/java/$PKG_PATH/
 
-mkdir -p $PRJ/src/main/java/$PKG_PATH
+mv $PRJ_NAME/src/main/java/com/github/piasy/PRJ_PKG_NAME/PRJ_NAME.java $PRJ_NAME/src/main/java/$PKG_PATH/$PRJ_NAME.java
+mv $PRJ_NAME/src/debug/java/com/github/piasy/PRJ_PKG_NAME/MainActivity.java $PRJ_NAME/src/debug/java/$PKG_PATH/MainActivity.java
+mv $PRJ_NAME/src/debug/java/com/github/piasy/PRJ_PKG_NAME/MyApp.java $PRJ_NAME/src/debug/java/$PKG_PATH/MyApp.java
 
-mkdir -p $PRJ/src/debug/java/$PKG_PATH
+rmdir $PRJ_NAME/src/main/java/com/github/piasy/PRJ_PKG_NAME/ \
+  $PRJ_NAME/src/debug/java/com/github/piasy/PRJ_PKG_NAME
 
-mv $PRJ/src/main/java/com/github/piasy/oauth3/github/GitHubOAuth.java $PRJ/src/main/java/$PKG_PATH/GitHubOAuth.java
+sed -i '.bk' -e "s/PRJ_NAME/$PRJ_NAME/g" settings.gradle
+sed -i '.bk' -e "s/PRJ_NAME/$PRJ_NAME/g" build.gradle
+sed -i '.bk' -e "s/PRJ_PKG_NAME/$PRJ_PKG_NAME/g" build.gradle
+sed -i '.bk' -e "s/PRJ_PKG_NAME/$PRJ_PKG_NAME/g" $PRJ_NAME/src/main/AndroidManifest.xml
+sed -i '.bk' -e "s/PRJ_PKG_NAME/$PRJ_PKG_NAME/g" $PRJ_NAME/src/main/java/$PKG_PATH/$PRJ_NAME.java
+sed -i '.bk' -e "s/PRJ_NAME/$PRJ_NAME/g" $PRJ_NAME/src/main/java/$PKG_PATH/$PRJ_NAME.java
+sed -i '.bk' -e "s/PRJ_PKG_NAME/$PRJ_PKG_NAME/g" $PRJ_NAME/src/debug/AndroidManifest.xml
+sed -i '.bk' -e "s/PRJ_NAME/$PRJ_NAME/g" $PRJ_NAME/src/debug/res/values/strings.xml
+sed -i '.bk' -e "s/PRJ_PKG_NAME/$PRJ_PKG_NAME/g" $PRJ_NAME/src/debug/java/$PKG_PATH/MainActivity.java
+sed -i '.bk' -e "s/PRJ_PKG_NAME/$PRJ_PKG_NAME/g" $PRJ_NAME/src/debug/java/$PKG_PATH/MyApp.java
 
-mv $PRJ/src/debug/java/com/github/piasy/oauth3/github/MainActivity.java $PRJ/src/debug/java/$PKG_PATH/MainActivity.java
-
-mv $PRJ/src/debug/java/com/github/piasy/oauth3/github/MyApp.java $PRJ/src/debug/java/$PKG_PATH/MyApp.java
-
-rmdir -p $PRJ/src/main/java/com/github/piasy/oauth3/github/ $PRJ/src/debug/java/com/github/piasy/oauth3/github/
+rm settings.gradle.bk \
+  build.gradle.bk \
+  $PRJ_NAME/src/main/AndroidManifest.xml.bk \
+  $PRJ_NAME/src/main/java/$PKG_PATH/$PRJ_NAME.java.bk \
+  $PRJ_NAME/src/debug/AndroidManifest.xml.bk \
+  $PRJ_NAME/src/debug/res/values/strings.xml.bk \
+  $PRJ_NAME/src/debug/java/$PKG_PATH/MainActivity.java.bk \
+  $PRJ_NAME/src/debug/java/$PKG_PATH/MyApp.java.bk
