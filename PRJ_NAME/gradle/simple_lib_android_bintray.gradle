@@ -28,7 +28,7 @@ if (!isLibRelease) {
     apply plugin: 'com.android.application'
 } else {
     apply plugin: 'com.android.library'
-    apply from: "https://raw.githubusercontent.com/Piasy/GradleScripts/master/bintray.gradle"
+    apply from: "$rootProject.rootDir/gradle/bintray.gradle"
 }
 
 android {

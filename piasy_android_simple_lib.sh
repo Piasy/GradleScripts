@@ -1,5 +1,19 @@
 #!/bin/bash
 
+# credit: https://github.com/dropbox/djinni/blob/master/example/run_djinni.sh
+# Locate the script file.  Cross symlinks if necessary.
+loc="$0"
+while [ -h "$loc" ]; do
+    ls=`ls -ld "$loc"`
+    link=`expr "$ls" : '.*-> \(.*\)$'`
+    if expr "$link" : '/.*' > /dev/null; then
+        loc="$link"  # Absolute link
+    else
+        loc="`dirname "$loc"`/$link"  # Relative link
+    fi
+done
+base_dir=$(cd "`dirname "$loc"`" && pwd)
+
 PRJ_NAME=$1
 PWD=$2
 
@@ -9,7 +23,7 @@ PKG_PATH=`echo "$PKG" | sed -e 's/\./\//g'`
 
 cd $PWD
 
-tar xvf ~/tools/piasy_android_simple_lib.tar
+tar xvf $base_dir/piasy_android_simple_lib.tar
 
 mv PRJ_NAME $PRJ_NAME
 
