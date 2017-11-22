@@ -26,8 +26,10 @@ def isLibRelease = "true".equals(System.getenv('IS_PIASY_LIB_RELEASE'))
 
 if (!isLibRelease) {
     apply plugin: 'com.android.application'
+    apply plugin: 'com.github.ben-manes.versions'
 } else {
     apply plugin: 'com.android.library'
+    apply plugin: 'com.github.ben-manes.versions'
     apply from: "$rootProject.rootDir/gradle/bintray.gradle"
 }
 
