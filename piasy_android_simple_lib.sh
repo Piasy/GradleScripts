@@ -17,6 +17,16 @@ base_dir=$(cd "`dirname "$loc"`" && pwd)
 PRJ_NAME=$1
 PWD=$2
 
+if [[ -z "${PRJ_NAME// }" ]]; then
+    echo "Please specify project name!"
+    exit 1
+fi
+
+if [[ -z "${PWD// }" ]]; then
+    echo "Please specify project working dir!"
+    exit 1
+fi
+
 PRJ_PKG_NAME=`echo "$PRJ_NAME" | perl -pe 's/([a-z0-9])([A-Z])/$1_\L$2/g' | perl -ne 'print lc'`
 PKG="com.github.piasy.$PRJ_PKG_NAME"
 PKG_PATH=`echo "$PKG" | sed -e 's/\./\//g'`

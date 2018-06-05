@@ -4,13 +4,9 @@ buildscript {
     repositories {
         jcenter()
         google()
-        maven {
-            url "https://plugins.gradle.org/m2/"
-        }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
-
+        classpath 'com.android.tools.build:gradle:3.1.2'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.0'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
 
@@ -45,11 +41,11 @@ ext {
     releaseVersionCode = 1
     releaseVersionName = '1.0.0'
 
-    androidCompileSdkVersion = 26
-    androidBuildToolsVersion = '27.0.1'
-    androidSupportSdkVersion = '27.0.1'
-    minSdkVersion = 16
-    targetSdkVersion = 26
+    androidCompileSdkVersion = 27
+    androidBuildToolsVersion = '27.0.3'
+    androidSupportSdkVersion = '27.1.1'
+    androidMinSdkVersion = 16
+    androidTargetSdkVersion = 27
 
     libDebugAppId = 'com.github.piasy.PRJ_PKG_NAME.example'
 }

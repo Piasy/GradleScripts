@@ -1,21 +1,19 @@
 apply from: "$rootProject.rootDir/gradle/simple_lib_android_bintray.gradle"
 
-android {
-    if (!"true".equals(System.getenv('IS_PIASY_LIB_RELEASE'))) {
-        defaultConfig {
-        }
-    } else {
-        defaultConfig {
-            //consumerProguardFiles 'proguard-rules.pro'
-        }
-    }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-}
+//android {
+//    if (!"true" == System.getenv('IS_PIASY_LIB_RELEASE')) {
+//        defaultConfig {
+//        }
+//    } else {
+//        defaultConfig {
+//        }
+//    }
+//}
 
 dependencies {
     implementation "com.android.support:appcompat-v7:$rootProject.androidSupportSdkVersion"
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5'
+
+    debugImplementation 'com.jakewharton:butterknife:8.8.1'
+    debugAnnotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
 }
